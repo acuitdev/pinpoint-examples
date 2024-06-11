@@ -100,8 +100,8 @@ namespace CustomAcuitPinpointClient
             string modelNumberAlias = unitScanStatus.Unit.ModelNumberAlias; // This is the unit model number alias, which is usually the internal equivalent model number and should normally be the one used to do things like look up test parameters.
 
             // If there are any unit workflow errors, they should be displayed to the operator and should normally prevent the unit from being tested.
-            foreach (Acuit.Pinpoint.Client2.WorkflowError error in unitScanStatus.WorkflowErrors)
-                Console.WriteLine($"Error: {error}");
+            foreach (Acuit.Pinpoint.Client2.WorkflowError workflowError in unitScanStatus.WorkflowErrors)
+                Console.WriteLine($"Error: {workflowError.Message}");
 
             // Return the unit-station identifier, which will be needed to record test results.
             return unitScanStatus.UnitStation.UnitStationId;

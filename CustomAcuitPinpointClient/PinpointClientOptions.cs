@@ -23,8 +23,6 @@ namespace CustomAcuitPinpointClient
         /// </remarks>
         public bool UseTransportSecurity { get; set; } = true;
 
-        // If the PC is not on the Rheem domain with a domain user logged into Windows, will need these settings:
-
         /// <summary>
         /// Gets or sets the domain name to use when connecting using explicit credentials.
         /// </summary>
@@ -43,7 +41,7 @@ namespace CustomAcuitPinpointClient
         /// <summary>
         /// Gets or sets the name of the line in Acuit Pinpoint where the station is located. This must match a line name configured in Acuit Pinpoint.
         /// </summary>
-        public string LineName { get; set; } = "AC1 Line";
+        public string LineName { get; set; } = "Line 1";
 
         /// <summary>
         /// Gets or sets the station type name for this station. This must match a station type configured for the line in Acuit Pinpoint.
