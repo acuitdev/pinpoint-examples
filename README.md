@@ -1,2 +1,3 @@
 # pinpoint-examples
-Example code using the Acuit Pinpoint API.
+
+Examples demonstrating use of the [Acuit Pinpoint API](https://www.acuit.com/docs/dev/index.html).
