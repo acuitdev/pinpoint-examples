@@ -2,13 +2,13 @@
 Imports Acuit.Pinpoint.Server.Client
 
 ''' <summary>
-''' A simple example client that connections to Acuit Pinpoint Server to record test results.
+''' A simple example client that connects to Acuit Pinpoint Server to record test results.
 ''' </summary>
 ''' <remarks>
-''' It assumes that the station type is configured for automatic worker logon, so worker badge number/passwords don't need to be used to log on/off.
+''' This example assumes that the station type is configured for automatic worker logon, so worker badge number/passwords don't need to be used to log on.
 '''
-''' Error handling isn't shown here, but try/catch should be used to watch for and handle things like Acuit Pinpoint Server connection problems
-''' or business logic faults.
+''' Error handling isn't shown here, but try/catch should be used to watch for and handle things like Acuit Pinpoint Server connection problems or business
+''' logic faults.
 '''
 ''' This example demonstrates calling the synchronous versions of the API methods. Note that there are asynchronous versions of all methods as well.
 ''' </remarks>
@@ -101,8 +101,12 @@ Friend Module Module1
         ' Update our worker-station identifier if it changes due to a shift change.
         If unitScanStatus.WorkerLogOnStatus IsNot Nothing Then _workerStationId = unitScanStatus.WorkerLogOnStatus.WorkerStationId
 
-        Dim modelNumber As String = unitScanStatus.Unit.ModelNumber ' This is the unit model number, which is usually the actual model number (i.e., the model number on the box), which might be a trade-branded model number.
-        Dim modelNumberAlias As String = unitScanStatus.Unit.ModelNumberAlias ' This is the unit model number alias, which is usually the internal equivalent model number and should normally be the one used to do things like look up test parameters.
+        ' This is the unit model number, which is usually the actual model number (i.e., the model number on the box), which might be a trade-branded model
+        ' number:
+        Dim modelNumber As String = unitScanStatus.Unit.ModelNumber
+        ' This is the unit model number alias, which is usually the internal equivalent model number and should normally be the one used to do things like
+        ' look up test parameters:
+        Dim modelNumberAlias As String = unitScanStatus.Unit.ModelNumberAlias
 
         ' If there are any unit workflow errors, they should be displayed to the operator and should normally prevent the unit from being tested.
         For Each workflowError As Acuit.Pinpoint.Client2.WorkflowError In unitScanStatus.WorkflowErrors

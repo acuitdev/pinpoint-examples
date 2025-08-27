@@ -6,13 +6,13 @@ using Acuit.Pinpoint.Server.Client;
 namespace CustomAcuitPinpointClient
 {
     /// <summary>
-    /// A simple example client that connections to Acuit Pinpoint Server to record test results.
+    /// A simple example client that connects to Acuit Pinpoint Server to record test results.
     /// </summary>
     /// <remarks>
-    /// It assumes that the station type is configured for automatic worker logon, so worker badge number/passwords don't need to be used to log on/off.
+    /// This example assumes that the station type is configured for automatic worker logon, so worker badge number/passwords don't need to be used to log on.
     /// 
-    /// Error handling isn't shown here, but try/catch should be used to watch for and handle things like Acuit Pinpoint Server connection problems
-    /// or business logic faults.
+    /// Error handling isn't shown here, but try/catch should be used to watch for and handle things like Acuit Pinpoint Server connection problems or business
+    /// logic faults.
     ///
     /// This example demonstrates calling the synchronous versions of the API methods. Note that there are asynchronous versions of all methods as well.
     /// </remarks>
@@ -28,7 +28,8 @@ namespace CustomAcuitPinpointClient
             // Retrieve the station settings at startup to get the auto-log-on worker identifier. This only needs to be done once.
             ClientHelper.Use(CreatePinpointClient(), pinpointClient =>
             {
-                s_pinpointStationSettings = pinpointClient.GetStationSettings3(s_options.LineName, s_options.StationTypeName, s_options.StationName, s_options.ClientVersion);
+                s_pinpointStationSettings = pinpointClient.GetStationSettings3(s_options.LineName, s_options.StationTypeName, s_options.StationName,
+                    s_options.ClientVersion);
                 if (!s_pinpointStationSettings.AutoLogOnWorker)
                     throw new InvalidOperationException($"Station type \"{s_options.StationTypeName}\" is not configured for auto log on.");
             });
@@ -40,8 +41,11 @@ namespace CustomAcuitPinpointClient
             var testData = new List<CustomTestDataItem>
             {
                 // Any number of test data items can be added here
-                new CustomTestDataItem { Name = "ChargeAmount", Value = "1.0" }, // Values must be converted to strings
-                new CustomTestDataItem { Name = "LeakFlow", Value = "2.0", Status = CustomTestDataStatus.Bad }, // Each item can optionally have Good or Bad specified, which will cause them to appear in green or red in Pinpoint
+
+                // Values must be converted to strings:
+                new CustomTestDataItem { Name = "ChargeAmount", Value = "1.0" },
+                // Each item can optionally have Good or Bad specified, which will cause them to appear in green or red in Pinpoint:
+                new CustomTestDataItem { Name = "LeakFlow", Value = "2.0", Status = CustomTestDataStatus.Bad },
             };
             OnTestAttemptCompleted(unitStationId, passed: false, "FAIL REASON", "Optional additional notes.", testData);
 
@@ -83,7 +87,8 @@ namespace CustomAcuitPinpointClient
                 // Record the worker logon at the station if necessary, obtaining a worker-station identifier that we'll use below.
                 if (!s_workerStationId.HasValue)
                 {
-                    Acuit.Pinpoint.Client2.WorkerLogOnStatus workerLogOnStatus = pinpointClient.WorkerLogOn2(s_options.LineName, s_options.StationTypeName, s_options.StationName, s_pinpointStationSettings.AutoLogOnWorkerId);
+                    Acuit.Pinpoint.Client2.WorkerLogOnStatus workerLogOnStatus = pinpointClient.WorkerLogOn2(s_options.LineName, s_options.StationTypeName,
+                        s_options.StationName, s_pinpointStationSettings.AutoLogOnWorkerId);
                     s_workerStationId = workerLogOnStatus.WorkerStationId;
                 }
 
@@ -96,8 +101,12 @@ namespace CustomAcuitPinpointClient
             if (unitScanStatus.WorkerLogOnStatus != null)
                 s_workerStationId = unitScanStatus.WorkerLogOnStatus.WorkerStationId;
 
-            string modelNumber = unitScanStatus.Unit.ModelNumber; // This is the unit model number, which is usually the actual model number (i.e., the model number on the box), which might be a trade-branded model number.
-            string modelNumberAlias = unitScanStatus.Unit.ModelNumberAlias; // This is the unit model number alias, which is usually the internal equivalent model number and should normally be the one used to do things like look up test parameters.
+            // This is the unit model number, which is usually the actual model number (i.e., the model number on the box), which might be a trade-branded model
+            // number:
+            string modelNumber = unitScanStatus.Unit.ModelNumber;
+            // This is the unit model number alias, which is usually the internal equivalent model number and should normally be the one used to do things like
+            // look up test parameters:
+            string modelNumberAlias = unitScanStatus.Unit.ModelNumberAlias;
 
             // If there are any unit workflow errors, they should be displayed to the operator and should normally prevent the unit from being tested.
             foreach (Acuit.Pinpoint.Client2.WorkflowError workflowError in unitScanStatus.WorkflowErrors)
@@ -119,7 +128,8 @@ namespace CustomAcuitPinpointClient
         {
             ClientHelper.Use(CreatePinpointClient(), pinpointClient =>
             {
-                _ = pinpointClient.AddTestResult2(s_options.LineName, unitStationId, s_options.TestTypeName, passed, failReason, notes, UnitTest.EncodeTestDataAsXml(testData));
+                _ = pinpointClient.AddTestResult2(s_options.LineName, unitStationId, s_options.TestTypeName, passed, failReason, notes,
+                    UnitTest.EncodeTestDataAsXml(testData));
             });
         }
 
@@ -132,7 +142,7 @@ namespace CustomAcuitPinpointClient
             // Can optionally inform Pinpoint that the unit is being released from the station; not strictly necessary.
             ClientHelper.Use(CreatePinpointClient(), pinpointClient =>
             {
-                pinpointClient.UnitReleased3(s_options.LineName, unitStationId);
+                _ = pinpointClient.UnitReleased3(s_options.LineName, unitStationId);
             });
         }
     }

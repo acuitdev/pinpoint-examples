@@ -16,7 +16,8 @@ namespace CustomAcuitPinpointClient
         public string PinpointServerName { get; set; } = "TODO";
 
         /// <summary>
-        /// Gets or sets whether to use transport security. If this is <see langword="true"/>, Transport Layer Security (TLS) over TCP is used, with the client's credentials validated via Windows.
+        /// Gets or sets whether to use transport security. If this is <see langword="true"/>, Transport Layer Security (TLS) over TCP is used, with the
+        /// client's credentials validated via Windows.
         /// </summary>
         /// <remarks>
         /// This can be used when a user on the same domain as the Acuit Pinpoint Server is logged into Windows on the client PC.
