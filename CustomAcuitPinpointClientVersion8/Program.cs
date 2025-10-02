@@ -45,6 +45,11 @@ namespace CustomAcuitPinpointClientVersion8
                     { "LeakFlow", 2.0 },
                     { "AlarmCode", "E0004" }
                 };
+                // Note that the above is syntactic sugar for:
+                //var testDataDictionary = new OrderedDictionary();
+                //testDataDictionary.Add("ChargeAmount", 1.0);
+                //testDataDictionary.Add("LeakFlow", 2.0);
+                //testDataDictionary.Add("AlarmCode", "E0004");
                 simpleStation.AddTestResult(unitSerialNumber, unitModelNumber, testName, passed: false, "FAIL REASON", "Optional additional notes.", testDataDictionary);
             }
             catch (Exception ex) when (ClientHelper.IsExpectedCommunicationException(ex))
