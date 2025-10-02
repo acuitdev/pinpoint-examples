@@ -29,7 +29,7 @@ namespace CustomAcuitPinpointClientVersion8
             };
 
             // A single instance of SimpleStation should be created and used for the lifetime of your application.
-            var simpleStation = new SimpleStation(options);
+            var station = new SimpleStation(options);
 
             string unitSerialNumber = "1";
             string unitModelNumber = null; // We will assume that the unit record should already exist in Acuit Pinpoint, so the model number should be null.
@@ -39,18 +39,18 @@ namespace CustomAcuitPinpointClientVersion8
             try
             {
                 // We'll use a simple dictionary to gather custom test data items to submit with the test result. Any number of items can be added.
-                var testDataDictionary = new OrderedDictionary
+                var testData = new OrderedDictionary
                 {
                     { "ChargeAmount", 1.0 },
                     { "LeakFlow", 2.0 },
                     { "AlarmCode", "E0004" }
                 };
                 // Note that the above is syntactic sugar for:
-                //var testDataDictionary = new OrderedDictionary();
-                //testDataDictionary.Add("ChargeAmount", 1.0);
-                //testDataDictionary.Add("LeakFlow", 2.0);
-                //testDataDictionary.Add("AlarmCode", "E0004");
-                simpleStation.AddTestResult(unitSerialNumber, unitModelNumber, testName, passed: false, "FAIL REASON", "Optional additional notes.", testDataDictionary);
+                //var testData = new OrderedDictionary();
+                //testData.Add("ChargeAmount", 1.0);
+                //testData.Add("LeakFlow", 2.0);
+                //testData.Add("AlarmCode", "E0004");
+                station.AddTestResult(unitSerialNumber, unitModelNumber, testName, passed: false, "FAIL REASON", "Optional additional notes.", testData);
             }
             catch (Exception ex) when (ClientHelper.IsExpectedCommunicationException(ex))
             {
@@ -61,12 +61,12 @@ namespace CustomAcuitPinpointClientVersion8
             // A successful test could be recorded like this:
             try
             {
-                var testDataDictionary = new OrderedDictionary
+                var testData = new OrderedDictionary
                 {
                     { "ChargeAmount", 1.0 },
                     { "LeakFlow", 0.0 }
                 };
-                simpleStation.AddTestResult(unitSerialNumber, unitModelNumber, testName, passed: true, reason: null, notes: null, testDataDictionary);
+                station.AddTestResult(unitSerialNumber, unitModelNumber, testName, passed: true, reason: null, notes: null, testData);
             }
             catch (Exception ex) when (ClientHelper.IsExpectedCommunicationException(ex))
             {
