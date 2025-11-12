@@ -3,7 +3,7 @@
 
 using System;
 using System.Collections.Specialized;
-using Acuit.Pinpoint.Server.Client;
+using Acuit.Pinpoint.Services.Client;
 
 namespace CustomAcuitPinpointClientVersion8
 {
@@ -52,7 +52,7 @@ namespace CustomAcuitPinpointClientVersion8
                 //testData.Add("AlarmCode", "E0004");
                 station.AddTestResult(unitSerialNumber, unitModelNumber, testName, passed: false, "FAIL REASON", "Optional additional notes.", testData);
             }
-            catch (Exception ex) when (ClientHelper.IsExpectedCommunicationException(ex))
+            catch (Exception ex)
             {
                 // Be sure to catch exceptions to handle connection problems or business logic faults.
                 Console.WriteLine($"Error recording test result: {ex.Message}");
@@ -68,7 +68,7 @@ namespace CustomAcuitPinpointClientVersion8
                 };
                 station.AddTestResult(unitSerialNumber, unitModelNumber, testName, passed: true, reason: null, notes: null, testData);
             }
-            catch (Exception ex) when (ClientHelper.IsExpectedCommunicationException(ex))
+            catch (Exception ex)
             {
                 Console.WriteLine($"Error recording test result: {ex.Message}");
             }

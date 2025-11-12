@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <OutputType>Exe</OutputType>
@@ -6,7 +6,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Acuit.Pinpoint.Server.Client" Version="8.0.0-preview.29" />
+    <PackageReference Include="Acuit.Pinpoint.Services.Client" Version="8.0.0-preview.38" />
   </ItemGroup>
 
 </Project>
